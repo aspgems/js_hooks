@@ -63,8 +63,8 @@ the initialization process:
     <%= add_js_hook( :users, :clients, users: 'action' ) %>
       --> Users.init(); Clients.init(); Users.initAction();
 
-    <%= add_js_hook( :clients, users: ['', 'action1', 'action2'] ) %>
-      --> Clients.init(); Users.init(); Users.initAction1(); Users.initAction2();
+    <%= add_js_hook( :clients, users: [:default, 'show', 'edit'] ) %>
+      --> Clients.init(); Users.init(); Users.initShow(); Users.initEdit();
 
 Three hooks are added by default: one with 'application' as name, one with the controller as name and one last
 with the controller as name and template as suffix.
@@ -72,6 +72,12 @@ with the controller as name and template as suffix.
 So, by default, the following methods will be called if they exist:
 
     GET /users/1 --> Application.init(); Users.init(); Users.initShow()
+
+A hook can be deleted by passing a false value as suffix
+
+    GET /users/1
+    <%= add_js_hook( :clients, users: false) %>
+      --> Application.init(); Clients.init();
 
 ## Contributing
 

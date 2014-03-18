@@ -2,6 +2,7 @@ require 'abstract_controller/helpers'
 
 module JsHooks
   module Controller
+    PREFIX = 'init'
     extend ActiveSupport::Concern
 
     module ClassMethods
@@ -30,7 +31,7 @@ module JsHooks
       #     add_js_hook( :users, :clients, users: 'action' )
       #       --> Users.init(); Clients.init(); Users.initAction();
       #
-      #     add_js_hook( :clients, users: ['', 'action1', 'action2'] )
+      #     add_js_hook( :clients, users: [:default, 'action1', 'action2'] )
       #       --> Clients.init(); Users.init(); Users.initAction1(); Users.initAction2();
       #
       # Three hooks are added by default: one with 'application' as name, one with the controller as name and one last
@@ -38,6 +39,11 @@ module JsHooks
       # So, by default, the following methods will be called if they exist:
       #
       #     GET /users/1 --> Application.init(); Users.init(); Users.initShow()
+      #
+      # A hook can be deleted by passing a false value as suffix
+      #     GET /users/1
+      #     add_js_hook( :clients, users: false)
+      #       --> Application.init(); Clients.init();
       def add_js_hook(*args)
         opts = args.extract_options!
 
@@ -45,15 +51,22 @@ module JsHooks
         args.each do |hook|
           hook = hook.to_s.camelize
           js_hooks[hook] ||= []
-          js_hooks[hook] = (js_hooks[hook] + [true]).uniq
+          js_hooks[hook] = (js_hooks[hook] + [PREFIX]).uniq
         end
 
         # Suffix init method
         opts.each_pair do |hook, methods|
           hook = hook.to_s.camelize
           js_hooks[hook] ||= []
+          remove_default = false
           if methods
-            js_hooks[hook] = (js_hooks[hook] + [methods].flatten.map! { |m| m.to_s.camelize.presence || true }).uniq
+            methods = [methods].flatten.map! do |m|
+              remove_default ||= !m
+              m = '' if m == :default
+              "#{PREFIX}#{m.to_s.camelize}"
+            end
+            js_hooks[hook] = (js_hooks[hook] + methods).uniq
+            js_hooks[hook].delete(PREFIX) if remove_default
           else
             js_hooks.delete(hook)
           end

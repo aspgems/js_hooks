@@ -26,17 +26,14 @@
 
         var methods = hooks[hookClass];
         if (!$.isArray(methods)) {
-          methods = ['']; // invoke the default .init() method
+          methods = [methods];
         }
 
         for (var i = 0; i < methods.length; i++) {
           var method = methods[i];
-          if (method === true) {
-            method = '';
-          } else if (method === false) {
+          if (method === false) {
             continue;
           }
-          method = 'init' + method;
 
           if ($.isFunction(hook[method])) {
             // if(console && console.debug) console.debug('Calling ' + hookClass + '.' + method + '();');

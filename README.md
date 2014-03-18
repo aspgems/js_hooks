@@ -54,16 +54,16 @@ This ``init`` function will be called automatically whenever the ``UsersControll
 By default, the gem invokes the hooks related to the current controller, but hooks can be added if they are not named
 after the current controller. For example, in your view, add:
 
-    <%= add_js_hook( :users, :clients ) %>
+    <% add_js_hook( :users, :clients ) %>
       --> Users.init(); Clients.init()
 
 By default, the ``init`` function is called for each hook. However, a suffix can be added to the ``init`` method to refine
 the initialization process:
 
-    <%= add_js_hook( :users, :clients, users: 'action' ) %>
+    <% add_js_hook( :users, :clients, users: 'action' ) %>
       --> Users.init(); Clients.init(); Users.initAction();
 
-    <%= add_js_hook( :clients, users: [:default, 'show', 'edit'] ) %>
+    <% add_js_hook( :clients, users: [:default, 'show', 'edit'] ) %>
       --> Clients.init(); Users.init(); Users.initShow(); Users.initEdit();
 
 Three hooks are added by default: one with 'application' as name, one with the controller as name and one last
@@ -76,7 +76,7 @@ So, by default, the following methods will be called if they exist:
 A hook can be deleted by passing a false value as suffix
 
     GET /users/1
-    <%= add_js_hook( :clients, users: false) %>
+    <% add_js_hook( :clients, users: false) %>
       --> Application.init(); Clients.init();
 
 ## Contributing

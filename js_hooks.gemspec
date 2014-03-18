@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Francisco R. Santos']
   spec.description   = %q{Manages JavaScript hooks for Rails controllers and views}
   spec.summary       = %q{Manages JavaScript hooks for Rails controllers and views}
-  spec.homepage      = 'http://'
+  spec.homepage      = 'https://github.com/aspgems/js_hooks'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)

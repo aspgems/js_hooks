@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'js_hooks'
   spec.version       = Jshooks::VERSION
   spec.authors       = ['Francisco R. Santos']
+  spec.email         = ['frsantos@aspgems.com']
   spec.description   = %q{Manages JavaScript hooks for Rails controllers and views}
   spec.summary       = %q{Manages JavaScript hooks for Rails controllers and views}
   spec.homepage      = 'https://github.com/aspgems/js_hooks'

@@ -20,7 +20,7 @@ Or install it yourself as:
 Include the módule in your controller:
 
     class MyController < ApplicationController
-      act_as_js_hookable
+      acts_as_js_hookable
     end
 
 Add the js_hooks.js file to `app/assets/javascripts/application.js`:

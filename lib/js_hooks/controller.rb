@@ -6,7 +6,7 @@ module JsHooks
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def act_as_js_hookable(options = {})
+      def acts_as_js_hookable(options = {})
         before_filter :add_default_js_hooks if :add_default_js_hooks?
 
         include JsHooks::Controller::LocalInstanceMethods

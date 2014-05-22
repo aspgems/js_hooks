@@ -6,6 +6,7 @@ module JsHooks
         window.JsHooks = window.JsHooks || {};
         window.JsHooks.namespace = '.#{Rails.application.class.to_s.split('::').first}';
         window.JsHooks.hooks     = #{js_hooks.to_json};
+        #{js_hooks_initializers.join(";\n")}
       JS
     end
   end

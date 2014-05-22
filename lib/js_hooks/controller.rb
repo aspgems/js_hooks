@@ -11,7 +11,7 @@ module JsHooks
 
         include JsHooks::Controller::LocalInstanceMethods
 
-        helper_method :js_hooks, :add_js_hook
+        helper_method :js_hooks, :add_js_hook, :js_hooks_initializers, :add_js_hook_initializer
       end
     end
 
@@ -19,6 +19,10 @@ module JsHooks
       # Javascript on demand hooks
       def js_hooks
         @js_hooks ||= {}
+      end
+
+      def js_hooks_initializers
+        @js_hooks_initializers ||= []
       end
 
       # Add javascript components to execute inside a document ready jquery closure before the body close tag in your
@@ -71,6 +75,15 @@ module JsHooks
             js_hooks.delete(hook)
           end
         end
+      end
+
+      # Adds JS code to execute after all hooks are defined but before they are initialized.
+      #
+      #  <% add_js_hook_initializer do %>
+      #    window.JsHooks.Users.myInitMethod();
+      #  <% end %>
+      def add_js_hook_initializer(initializer)
+        self.js_hooks_initializers << initializer if initializer
       end
 
       private
